@@ -5,6 +5,7 @@
 <p align="center">
     <a href="https://github.com/maxibor/corecomb/actions/workflows/ci.yaml">
         <img src="https://github.com/maxibor/corecomb/actions/workflows/ci.yaml/badge.svg" alt="Workflow status badge">
+        <a href="https://pypi.org/project/corecomb"><img src="https://badge.fury.io/py/corecomb.svg" alt="PyPI version" height="18"></a>
     </a>
 </p>
 
