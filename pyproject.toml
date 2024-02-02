@@ -10,6 +10,7 @@ python = "^3.10"
 click = "^8.1.7"
 pysam = "^0.22.0"
 rich-click = "^1.7.3"
+pytest = "^8.0.0"
 
 [tool.poetry.scripts]
 corecomb = 'corecomb.__init__:create_xmfa'

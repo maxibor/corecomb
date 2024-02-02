@@ -5,6 +5,8 @@ from pathlib import Path
 from textwrap import wrap
 import logging
 
+logging.basicConfig(level=logging.INFO)
+
 
 def replace_ambiguous(seq, alphabet=set(["A", "T", "C", "G", "N", "-"])):
     """Replace ambiguous characters in a sequence with Ns.
@@ -41,6 +43,7 @@ def write_xmfa(seqdict, gene_order, genomes, gene_aln_len, outfile):
                         fw.write(f">{genome}:{i}-{i+gene_aln_len[gene]}\n")
                         fw.write("\n".join(wrap(seqdict[gene][genome], 60)) + "\n")
                     else:
+                        logging.warning(f"Genome {genome} is missing gene {gene}")
                         fw.write(f">{genome}\n")
                         fw.write("\n".join(wrap("-" * gene_aln_len[gene], 60)) + "\n")
                 i += gene_aln_len[gene]
@@ -106,5 +109,4 @@ def create_xmfa(gene_al_dir, pan_fa, extension="fas", outfile="corecomb.xmfa"):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
     create_xmfa()
