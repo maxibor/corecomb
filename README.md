@@ -2,6 +2,12 @@
     <img src="img/logo_text.png" width="300">
 </p>
 
+<p align="center">
+    <a href="https://github.com/maxibor/corecomb/actions/workflows/ci.yaml">
+        <img src="https://github.com/maxibor/corecomb/actions/workflows/ci.yaml/badge.svg" alt="Workflow status badge">
+    </a>
+</p>
+
 **CoRecomb**: create a XMFA file from Panaroo core gene alignments to detect recombination in core-genome using ClonalFrameML
 
 # Installation
