@@ -26,6 +26,6 @@ jobs:
         pip install poetry
     - name: Install and test
       run: |
-        poetry install
+        pip install .
         corecomb --help
         poetry run pytest -vv
