@@ -22,7 +22,7 @@ pip install corecomb
 If you are in Panaroo output directory, just run: 
 
 ```
-corerecomb 
+corecomb 
 ```
 
 ## Get help
