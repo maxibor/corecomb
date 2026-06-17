@@ -1,3 +1,5 @@
+ #!/usr/bin/env python
+
 import rich_click as click
 import pysam
 from glob import glob
@@ -64,12 +66,6 @@ def write_xmfa(seqdict, gene_order, genomes, gene_aln_len, outfile):
     show_default=True,
 )
 @click.option(
-    "--exclude",
-    help="Name of genome to exclude from XMFA",
-    default=None,
-    show_default=True,
-)
-@click.option(
     "--extension",
     default="fas",
     help="File extension of core-genome gene alignments",
@@ -81,7 +77,7 @@ def write_xmfa(seqdict, gene_order, genomes, gene_aln_len, outfile):
     help="Path to output XMFA file",
     show_default=True,
 )
-def create_xmfa(gene_al_dir, pan_fa, exclude, extension="fas", outfile="corecomb.xmfa"):
+def create_xmfa(gene_al_dir, pan_fa, extension="fas", outfile="corecomb.xmfa"):
     """Create XMFA file from ClonalFrameML input from Panaroo core-genome gene alignments"""
     logging.info(f"Reading gene order from {pan_fa}")
     gene_order = []
@@ -90,8 +86,6 @@ def create_xmfa(gene_al_dir, pan_fa, exclude, extension="fas", outfile="corecomb
 
     logging.info(f"Reading gene alignments from {gene_al_dir} *.{extension} files")
     fas = [Path(p) for p in glob(f"{gene_al_dir}/*.{extension}")]
-    if exclude:
-        logging.info(f"Excluding genome {exclude}")
 
     seqdict = {}
     genomes = set()
@@ -102,8 +96,7 @@ def create_xmfa(gene_al_dir, pan_fa, exclude, extension="fas", outfile="corecomb
         for record in pysam.FastxFile(gene):
             gene_aln_len[gene_name] = len(record.sequence)
             recname = record.name.split(";")[0]
-            if exclude != recname:
-                genomes.add(recname)
+            genomes.add(recname)
             seqdict[gene_name][recname] = replace_ambiguous(record.sequence)
     genomes = sorted(genomes)
 
@@ -116,6 +109,12 @@ def create_xmfa(gene_al_dir, pan_fa, exclude, extension="fas", outfile="corecomb
         outfile=outfile,
     )
 
-
 if __name__ == "__main__":
-    create_xmfa()
+    import sys
+    if len(sys.argv) == 1:
+        create_xmfa.main(args=["--help"])
+    else:
+        create_xmfa()
+#if __name__ == "__main__":
+#    create_xmfa()
+ 
