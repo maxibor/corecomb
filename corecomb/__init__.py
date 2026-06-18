@@ -1,5 +1,5 @@
 import rich_click as click
-import pysam
+from pysam import FastxFile
 from glob import glob
 from pathlib import Path
 from textwrap import wrap
@@ -85,7 +85,7 @@ def create_xmfa(gene_al_dir, pan_fa, exclude, extension="fas", outfile="corecomb
     """Create XMFA file from ClonalFrameML input from Panaroo core-genome gene alignments"""
     logging.info(f"Reading gene order from {pan_fa}")
     gene_order = []
-    for record in pysam.FastxFile(pan_fa):
+    for record in FastxFile(pan_fa):
         gene_order.append(record.name)
 
     logging.info(f"Reading gene alignments from {gene_al_dir} *.{extension} files")
@@ -99,7 +99,7 @@ def create_xmfa(gene_al_dir, pan_fa, exclude, extension="fas", outfile="corecomb
     for gene in fas:
         gene_name = gene.name.split(".")[0]
         seqdict[gene_name] = {}
-        for record in pysam.FastxFile(gene):
+        for record in FastxFile(gene):
             gene_aln_len[gene_name] = len(record.sequence)
             recname = record.name.split(";")[0]
             if exclude != recname:
